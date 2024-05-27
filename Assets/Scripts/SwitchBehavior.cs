@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SwitchBehavior : MonoBehaviour
+public class SwitchBehavior : Sensor
 {
-    private MeshRenderer SwitchRenderer;
+    private MeshRenderer switchRenderer;
     public Material onSwitchMaterial;
     public Material offSwitchMaterial;
 
@@ -13,23 +13,27 @@ public class SwitchBehavior : MonoBehaviour
 
     private void Start()
     {
-        SwitchRenderer = GetComponent<MeshRenderer>();
         sensorSignal = false;
+        GetMeshComponents();
     }
 
     private void OnMouseDown()
     {
         if (sensorSignal == false)
         {
-            SwitchRenderer.material = onSwitchMaterial;
             sensorSignal = true;
-            
+            ChangeSensorStatus( switchRenderer, onSwitchMaterial);
         }
         else if (sensorSignal == true)
         {
-            SwitchRenderer.material = offSwitchMaterial;
             sensorSignal = false;
+            ChangeSensorStatus(switchRenderer, offSwitchMaterial);
         }
-
     }
+
+    private void GetMeshComponents() // ABSTRACTION
+    {
+        switchRenderer = GetComponent<MeshRenderer>();
+    }
+    
 }

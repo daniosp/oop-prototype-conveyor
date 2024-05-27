@@ -1,10 +1,12 @@
+
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SensorBehavior : MonoBehaviour
+public class SensorBehavior : Sensor
 {
-    private MeshRenderer SensorRenderer;
+    private MeshRenderer sensorRenderer;
     public Material onSensorMaterial;
     public Material offSensorMaterial;
 
@@ -12,26 +14,30 @@ public class SensorBehavior : MonoBehaviour
     private MeshRenderer ledRenderer;
     public Material onLedMaterial;
     public Material offLedMaterial;
+
     public bool sensorSignal;
 
     private void Start()
     {
-        SensorRenderer = GetComponent<MeshRenderer>();
-        ledRenderer = sensorLed.GetComponent<MeshRenderer>();
         sensorSignal = false;
+        GetMeshComponents();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        SensorRenderer.material = onSensorMaterial;
-        ledRenderer.material = onLedMaterial;
         sensorSignal = true;
+        ChangeSensorStatus(sensorRenderer, onSensorMaterial, ledRenderer, onLedMaterial);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        SensorRenderer.material = offSensorMaterial;
-        ledRenderer.material = offLedMaterial;
         sensorSignal = false;
+        ChangeSensorStatus(sensorRenderer, offSensorMaterial, ledRenderer, offLedMaterial);
+    }
+
+    private void GetMeshComponents() // ABSTRACTION
+    {
+        sensorRenderer = GetComponent<MeshRenderer>();
+        ledRenderer = sensorLed.GetComponent<MeshRenderer>();
     }
 }

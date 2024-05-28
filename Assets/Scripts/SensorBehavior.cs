@@ -15,7 +15,7 @@ public class SensorBehavior : Sensor
     public Material onLedMaterial;
     public Material offLedMaterial;
 
-    public bool signal;
+    public bool signal { get; private set; } // ENCAPSULATION
 
     private void Start()
     {

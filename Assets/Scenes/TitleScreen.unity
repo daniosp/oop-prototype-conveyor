@@ -159,8 +159,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 850, y: -410}
-  m_SizeDelta: {x: 120, y: 60}
+  m_AnchoredPosition: {x: 870, y: -470}
+  m_SizeDelta: {x: 80, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &231286685
 MonoBehaviour:
@@ -604,7 +604,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -120}
+  m_AnchoredPosition: {x: 0, y: -388.7}
   m_SizeDelta: {x: 220, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &795993685
@@ -785,8 +785,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 42
-  m_fontSizeBase: 42
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1228,7 +1228,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 63}
+  m_AnchoredPosition: {x: 0, y: 176}
   m_SizeDelta: {x: 708.31, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1981218810
@@ -1251,10 +1251,19 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget turpis
-    ac mauris varius commodo. Curabitur nibh orci, ornare at volutpat ac, pharetra
-    sit amet dui. In id odio urna. Nullam lobortis velit in urna maximus mollis.
-    Cras sed nunc tristique, malesuada augue at, sagittis quam.
+  m_text: "Instructions:\nThe box must be located manually in sensors S2 or S3. The
+    user must then select one of the following switch configurations to indicate
+    the conveyor what actions it must perform.\n\n\t1. SW1=0 and SW2=0 and START
+    is pressed: The box moves towards S4, when it reaches the sensor it stops for
+    2 seconds, then returns to its initial position.\n\n\t2. SW1=0 and SW2=1 and
+    START is pressed: The box moves towards S1, when it reaches the sensor it stops
+    for 2 seconds, then returns to its initial position.\n\n\t3. SW1=1 and SW2=0
+    and START is pressed: The box will move indefinetly between sensors S2 and S3
+    until the switches are changed to another mode of operation.\n\nIf the box is
+    not located at a valid inital position or if both SW1 and SW2 switches are activated
+    simultaneously, an ERROR message will pop-up on the screen indicating what condition
+    is currently occurring. If this happens, the conveyor belt wont be able to operate.
+    Also a STOP switch is implemented, it pauses the conveyor at any given time."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1281,15 +1290,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_HorizontalAlignment: 8
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -1317,7 +1326,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -489.08258, y: 0, z: -502.89813, w: 0}
+  m_margin: {x: -363.94952, y: 0, z: -371.17084, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

@@ -7,6 +7,7 @@ public class ObjectOnConveyorBehavior : MonoBehaviour
 {
     public float speed;
     private SystemControl sc_script;
+    private bool isOnConveyor;
 
     Vector3 mousePosition;
 
@@ -18,12 +19,12 @@ public class ObjectOnConveyorBehavior : MonoBehaviour
 
     void Update()
     {
-        if (sc_script.turnL == true) 
+        if (sc_script.turnL == true && isOnConveyor == true)
         {
             transform.Translate(Vector3.back * speed * Time.deltaTime);
         }
 
-        if (sc_script.turnR == true)
+        if (sc_script.turnR == true && isOnConveyor == true)
         {
             transform.Translate(-Vector3.back * speed * Time.deltaTime);
         }
@@ -42,6 +43,15 @@ public class ObjectOnConveyorBehavior : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        transform.position = new Vector3 (0,2f,Camera.main.ScreenToWorldPoint(Input.mousePosition - mousePosition).z);
+        transform.position = new Vector3(0, 2f, Camera.main.ScreenToWorldPoint(Input.mousePosition - mousePosition).z);
+        isOnConveyor = false;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Conveyor"))
+        {
+            isOnConveyor = true;
+        }
     }
 }

@@ -8,7 +8,7 @@ public class SwitchBehavior : Sensor
     public Material onSwitchMaterial;
     public Material offSwitchMaterial;
 
-    public bool signal;
+    public bool signal { get; private set; } // ENCAPSULATION
 
 
     private void Start()

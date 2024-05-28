@@ -25,13 +25,13 @@ public class SystemControl : MonoBehaviour
     // The following are custom methods for recieveing each sensor signal as a boolean variable
     bool ReadSensorInput(GameObject sensor)
     {
-        sensorInput = sensor.GetComponent<SensorBehavior>().sensorSignal;
+        sensorInput = sensor.GetComponent<SensorBehavior>().signal;
         return sensorInput;
     }
 
     bool ReadSwitchInput(GameObject sensor)
     {
-        sensorInput = sensor.GetComponent<SwitchBehavior>().sensorSignal;
+        sensorInput = sensor.GetComponent<SwitchBehavior>().signal;
         return sensorInput;
     }
 

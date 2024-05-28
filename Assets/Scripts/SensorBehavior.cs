@@ -15,23 +15,23 @@ public class SensorBehavior : Sensor
     public Material onLedMaterial;
     public Material offLedMaterial;
 
-    public bool sensorSignal;
+    public bool signal;
 
     private void Start()
     {
-        sensorSignal = false;
+        signal = false;
         GetMeshComponents();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        sensorSignal = true;
+        signal = true;
         ChangeSensorStatus(sensorRenderer, onSensorMaterial, ledRenderer, onLedMaterial);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        sensorSignal = false;
+        signal = false;
         ChangeSensorStatus(sensorRenderer, offSensorMaterial, ledRenderer, offLedMaterial);
     }
 

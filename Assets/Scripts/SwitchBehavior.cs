@@ -8,25 +8,25 @@ public class SwitchBehavior : Sensor
     public Material onSwitchMaterial;
     public Material offSwitchMaterial;
 
-    public bool sensorSignal;
+    public bool signal;
 
 
     private void Start()
     {
-        sensorSignal = false;
+        signal = false;
         GetMeshComponents();
     }
 
     private void OnMouseDown()
     {
-        if (sensorSignal == false)
+        if (signal == false)
         {
-            sensorSignal = true;
+            signal = true;
             ChangeSensorStatus( switchRenderer, onSwitchMaterial);
         }
-        else if (sensorSignal == true)
+        else if (signal == true)
         {
-            sensorSignal = false;
+            signal = false;
             ChangeSensorStatus(switchRenderer, offSwitchMaterial);
         }
     }

@@ -12,6 +12,8 @@ public class ObjectOnConveyorBehavior : MonoBehaviour
     public float speed;
     public GameObject systemControl;
 
+    Vector3 mousePosition;
+
     void Update()
     {
         if (systemControl.GetComponent<SystemControl>().turnL == true) 
@@ -23,7 +25,20 @@ public class ObjectOnConveyorBehavior : MonoBehaviour
         {
             transform.Translate(-Vector3.back * speed * Time.deltaTime);
         }
+    }
 
+    private Vector3 GetMousePos()
+    {
+        return Camera.main.WorldToScreenPoint(transform.position);
+    }
 
+    private void OnMouseDown()
+    {
+        mousePosition = Input.mousePosition - GetMousePos();
+    }
+
+    private void OnMouseDrag()
+    {
+        transform.position = new Vector3 (0,2f,Camera.main.ScreenToWorldPoint(Input.mousePosition - mousePosition).z);
     }
 }

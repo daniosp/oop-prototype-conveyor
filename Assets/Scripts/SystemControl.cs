@@ -32,6 +32,15 @@ public class SystemControl : MonoBehaviour
         StartCoroutine(IterativeCoroutine());
     }
 
+    private IEnumerator IterativeCoroutine() // This coroutine is called within the Start() method to ensure the creation of just one control coroutine
+    {
+        while (START_ == false)
+        {
+            yield return ControlCoroutine();
+        }
+    }
+
+
     // The following is a Co-Routine used for setting up time delays within the code
 
     private IEnumerator digitalDelay(int seconds)
@@ -39,6 +48,19 @@ public class SystemControl : MonoBehaviour
         yield return new WaitForSeconds(seconds);
     }
 
+    // The following is a Co-Routine for pausing the conveyor belt at any time
+
+    private IEnumerator ConveyorPause()
+    {
+        while (swSTOP.signal == true)
+        {
+            turnR = false;
+            turnL = false;
+
+            yield return null;
+        }
+
+    }
 
     // ===========================================
     //                SYSTEM CONTROL 
@@ -59,7 +81,7 @@ public class SystemControl : MonoBehaviour
         while (seS4.signal == false)
         {
             turnL = true;
-            yield return null;
+            yield return ConveyorPause();
         }
 
         turnL = false;
@@ -71,7 +93,7 @@ public class SystemControl : MonoBehaviour
             while (seS2.signal == false)
             {
                 turnR = true;
-                yield return null;
+                yield return ConveyorPause();
             }
 
             turnR = false;
@@ -82,7 +104,7 @@ public class SystemControl : MonoBehaviour
             while (seS3.signal == false)
             {
                 turnR = true;
-                yield return null;
+                yield return ConveyorPause();
             }
 
             turnR = false;
@@ -107,7 +129,7 @@ public class SystemControl : MonoBehaviour
         while (seS1.signal == false)
         {
             turnR = true;
-            yield return null;
+            yield return ConveyorPause();
         }
 
         turnR = false;
@@ -119,7 +141,7 @@ public class SystemControl : MonoBehaviour
             while (seS2.signal == false)
             {
                 turnL = true; ;
-                yield return null;
+                yield return ConveyorPause();
             }
 
             turnL = false;
@@ -130,7 +152,7 @@ public class SystemControl : MonoBehaviour
             while (seS3.signal == false)
             {
                 turnL = true;
-                yield return null;
+                yield return ConveyorPause();
             }
 
             turnL = false;
@@ -148,7 +170,7 @@ public class SystemControl : MonoBehaviour
             {
                 turnR = true;
 
-                yield return null;
+                yield return ConveyorPause();
             }
 
             turnR = false;
@@ -158,7 +180,7 @@ public class SystemControl : MonoBehaviour
             {
                 turnL = true;
 
-                yield return null;
+                yield return ConveyorPause();
             }
 
             turnR = false;
@@ -211,13 +233,6 @@ public class SystemControl : MonoBehaviour
             Debug.Log("ERROR: Switches SW1 and SW2 cannot be activated simultaneously. Please set the switches to an allowed configuration.");
         }
         
-    }
-
-    private IEnumerator IterativeCoroutine() // This coroutine is called within the Start() method to ensure the creation of just one control coroutine
-    {
-        while (START_ == false) { 
-            yield return ControlCoroutine();
-        }
     }
 
 }

@@ -5,28 +5,31 @@ using UnityEngine;
 
 public class ObjectOnConveyorBehavior : MonoBehaviour
 {
-    // ===============================================================================================================================
-    // This script controls the direction in which the cube must move whenever an output signal is sent from the systemControl script.
-    // ===============================================================================================================================
-
     public float speed;
-    public GameObject systemControl;
+    private SystemControl sc_script;
 
     Vector3 mousePosition;
 
+    //  The follwoing methods control the direction in which the cube must move whenever an output signal is sent from the systemControl script.
+    private void Start()
+    {
+        sc_script = GameObject.Find("SystemControl").GetComponent<SystemControl>();
+    }
+
     void Update()
     {
-        if (systemControl.GetComponent<SystemControl>().turnL == true) 
+        if (sc_script.turnL == true) 
         {
             transform.Translate(Vector3.back * speed * Time.deltaTime);
         }
 
-        if (systemControl.GetComponent<SystemControl>().turnR == true)
+        if (sc_script.turnR == true)
         {
             transform.Translate(-Vector3.back * speed * Time.deltaTime);
         }
     }
 
+    // The following methods allow the object to be clicked-on and dragged throughout the conveyor belt
     private Vector3 GetMousePos()
     {
         return Camera.main.WorldToScreenPoint(transform.position);

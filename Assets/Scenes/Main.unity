@@ -928,7 +928,7 @@ GameObject:
   - component: {fileID: 1232826073}
   - component: {fileID: 1232826072}
   m_Layer: 0
-  m_Name: SwitchSW00_text
+  m_Name: STOP_text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -942,7 +942,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1232826071}
-  m_Text: SW00
+  m_Text: STOP
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
@@ -1944,8 +1944,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 107e008da6d65d34c9128de2e175a110, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 6.68
-  systemControl: {fileID: 1333904369}
+  speed: 7
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -11,28 +11,25 @@ public class SystemControl : MonoBehaviour
     // and sends Output Signals to indicate the desired movement of the cube gameObject.
     // ===========================================================================================================
 
-    private bool sensorInput;
-    public GameObject[] sensorList;
-
     private int pos_ini;
+    private bool START_ = false;
 
-    public bool turnR;
-    public bool turnL;
-
-    public bool START_ = false;
+    public bool turnR { get; private set; } // ENCAPSULATION
+    public bool turnL { get; private set; } // ENCAPSULATION
 
 
-    // The following are custom methods for recieveing each sensor signal as a boolean variable
-    bool ReadSensorInput(GameObject sensor)
+    public SensorBehavior seS1;
+    public SensorBehavior seS2;
+    public SensorBehavior seS3;
+    public SensorBehavior seS4;
+    public SwitchBehavior swSTART;
+    public SwitchBehavior swSTOP;
+    public SwitchBehavior sw1;
+    public SwitchBehavior sw2;
+
+    void Start()
     {
-        sensorInput = sensor.GetComponent<SensorBehavior>().signal;
-        return sensorInput;
-    }
-
-    bool ReadSwitchInput(GameObject sensor)
-    {
-        sensorInput = sensor.GetComponent<SwitchBehavior>().signal;
-        return sensorInput;
+        StartCoroutine(IterativeCoroutine());
     }
 
     // The following is a Co-Routine used for setting up time delays within the code
@@ -47,33 +44,19 @@ public class SystemControl : MonoBehaviour
     //                SYSTEM CONTROL 
     // ===========================================
 
-
-    /*Sensor Input List (Use ReadSensorInput):
-     *      Sensor1 = sensorList[0];
-     *      Sensor2 = sensorList[1];
-     *      Sensor3 = sensorList[2];
-     *      Sensor4 = sensorList[3];
-     *
-     *Switch Input List (Use ReadSwitchInput)
-     *      SwStart = sensorList[4];
-     *      SwStop= sensorList[5];
-     *      Sw1 = sensorList[6];
-     *      Sw2 = sensorList[7];
-    */
-
     // The following are custom methods built on coroutines that indicate the set of actions that the conveyor must execute
     private IEnumerator case_1() // If the cube is located at S2 or S3, then it must reach S4, wait for 2 seconds and return to its initial position
     {
-        if (ReadSensorInput(sensorList[1]) == true)
+        if (seS2.signal == true)
         {
             pos_ini = 2;
         }
-        else if (ReadSensorInput(sensorList[2]) == true)
+        else if (seS3.signal == true)
         {
             pos_ini = 3;
         }
 
-        while (ReadSensorInput(sensorList[3]) == false)
+        while (seS4.signal == false)
         {
             turnL = true;
             yield return null;
@@ -85,7 +68,7 @@ public class SystemControl : MonoBehaviour
 
         if (pos_ini == 2)
         {
-            while (ReadSensorInput(sensorList[1]) == false)
+            while (seS2.signal == false)
             {
                 turnR = true;
                 yield return null;
@@ -96,7 +79,7 @@ public class SystemControl : MonoBehaviour
 
         else if (pos_ini == 3)
         {
-            while (ReadSensorInput(sensorList[2]) == false)
+            while (seS3.signal == false)
             {
                 turnR = true;
                 yield return null;
@@ -112,16 +95,16 @@ public class SystemControl : MonoBehaviour
     private IEnumerator case_2() // If the cube is located at S2 or S3, then it must reach S1, wait for 2 seconds and return to its initial position
     {
 
-        if (ReadSensorInput(sensorList[1]) == true)
+        if (seS2.signal == true)
         {
             pos_ini = 2;
         }
-        else if (ReadSensorInput(sensorList[2]) == true)
+        else if (seS3.signal == true)
         {
             pos_ini = 3;
         }
 
-        while (ReadSensorInput(sensorList[0]) == false)
+        while (seS1.signal == false)
         {
             turnR = true;
             yield return null;
@@ -133,7 +116,7 @@ public class SystemControl : MonoBehaviour
 
         if (pos_ini == 2)
         {
-            while (ReadSensorInput(sensorList[1]) == false)
+            while (seS2.signal == false)
             {
                 turnL = true; ;
                 yield return null;
@@ -144,7 +127,7 @@ public class SystemControl : MonoBehaviour
 
         else if (pos_ini == 3)
         {
-            while (ReadSensorInput(sensorList[2]) == false)
+            while (seS3.signal == false)
             {
                 turnL = true;
                 yield return null;
@@ -159,9 +142,9 @@ public class SystemControl : MonoBehaviour
 
     private IEnumerator case_3() // If the cube is located at S2 or S3, then it will move indefinitely between sensors S2 and S3
     {
-        while (ReadSwitchInput(sensorList[6]) == true && ReadSwitchInput(sensorList[7]) == false)
+        while (sw1.signal == true && sw2.signal == false)
         {
-            while (ReadSensorInput(sensorList[1]) == false)
+            while (seS2.signal == false)
             {
                 turnR = true;
 
@@ -171,7 +154,7 @@ public class SystemControl : MonoBehaviour
             turnR = false;
             turnL = false;
 
-            while (ReadSensorInput(sensorList[2]) == false)
+            while (seS3.signal == false)
             {
                 turnL = true;
 
@@ -191,7 +174,7 @@ public class SystemControl : MonoBehaviour
     private IEnumerator ControlCoroutine() // This coroutine implements each of the previous cases, it runs each one according to the positions of SW1 and SW2.
     {
 
-        while (ReadSwitchInput(sensorList[4]) == false)
+        while (swSTART.signal == false)
         {
             turnR = false;
             turnL = false;
@@ -199,29 +182,29 @@ public class SystemControl : MonoBehaviour
             yield return null;
         }
 
-        if ((ReadSensorInput(sensorList[1]) == true || ReadSensorInput(sensorList[2]) == true) && ReadSwitchInput(sensorList[6]) == false && ReadSwitchInput(sensorList[7]) == false)
+        if ((seS2.signal == true || seS3.signal == true) && sw1.signal == false && sw2.signal == false)
         {
             yield return StartCoroutine(case_1());
         }
 
-        else if ((ReadSensorInput(sensorList[1]) == true || ReadSensorInput(sensorList[2]) == true) && ReadSwitchInput(sensorList[6]) == false && ReadSwitchInput(sensorList[7]) == true)
+        else if ((seS2.signal == true || seS3.signal == true) && sw1.signal == false && sw2.signal == true)
         {
             yield return StartCoroutine(case_2());
         }
 
-        else if ((ReadSensorInput(sensorList[1]) == true || ReadSensorInput(sensorList[2]) == true) && ReadSwitchInput(sensorList[6]) == true && ReadSwitchInput(sensorList[7]) == false)
+        else if ((seS2.signal == true || seS3.signal == true) && sw1.signal == true && sw2.signal == false)
         {
             yield return StartCoroutine(case_3());
         }
 
-        else if (ReadSensorInput(sensorList[1]) == false && ReadSensorInput(sensorList[2]) == false)
+        else if (seS2.signal == false && seS3.signal == false)
         {
             turnL = false;
             turnR = false;
             Debug.Log("ERROR: Cube not in sensors S2 or S3 when pressing Start. Please relocate correctly and try again.");
         }
 
-        else if (ReadSwitchInput(sensorList[6]) == true && ReadSwitchInput(sensorList[7]) == true)
+        else if (sw1.signal == true && sw2.signal == true)
         {
             turnL = false;
             turnR = false;
@@ -237,9 +220,4 @@ public class SystemControl : MonoBehaviour
         }
     }
 
-
-void Start()
-    {
-        StartCoroutine(IterativeCoroutine());
-    }
 }

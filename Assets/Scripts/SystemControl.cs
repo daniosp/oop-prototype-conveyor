@@ -13,13 +13,14 @@ public class SystemControl : MonoBehaviour
     // ===========================================================================================================
 
     private int pos_ini;
-    private bool START_ = false;
+    private bool START_ = false; // Temporary variable to keep the main Coroutine running
 
     public bool turnR { get; private set; } // ENCAPSULATION
     public bool turnL { get; private set; } // ENCAPSULATION
 
     public TextMeshProUGUI infoText;
 
+    // Reference to the Behavior Scripts of each sensor and switch
     public SensorBehavior seS1;
     public SensorBehavior seS2;
     public SensorBehavior seS3;
@@ -41,7 +42,6 @@ public class SystemControl : MonoBehaviour
             yield return ControlCoroutine();
         }
     }
-
 
     // The following is a Co-Routine used for setting up time delays within the code
 
@@ -70,7 +70,7 @@ public class SystemControl : MonoBehaviour
 
     // The following are custom methods built on coroutines that indicate the set of actions that the conveyor must execute
 
-    private IEnumerator ControlCoroutine() // This coroutine implements each of the previous cases, it runs each one according to the positions of SW1 and SW2.
+    private IEnumerator ControlCoroutine() // This coroutine implements each of the cases shown below, it runs each one according to the positions of SW1 and SW2.
     {
 
         while (swSTART.signal == false)
@@ -115,8 +115,6 @@ public class SystemControl : MonoBehaviour
         }
 
     }
-
-
 
     private IEnumerator case_1() // If the cube is located at S2 or S3, then it must reach S4, wait for 2 seconds and return to its initial position
     {
